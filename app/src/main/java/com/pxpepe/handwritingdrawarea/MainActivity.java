@@ -32,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     JSONArray lt;
     long tempoInicio = 0;
 
+    private String caixaTextoAceite = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,12 +77,37 @@ public class MainActivity extends AppCompatActivity {
         mPaint.setStrokeWidth(12);
     }
 
+    public void clicarBtnLimpar(View vistaBtn) {
+        // A primeira vez limpa apenas o conteúdo adicionado em último
+        // A segunda vez que clicamos limpa tudo
+        // Se a caixa já eta limpa, limpa também a caixa de texto
+        dv.resetCanvasArea( dv.getWidth(),dv.getHeight());
+
+        TextView visor = findViewById(R.id.textView);
+        String textoAtual = visor.getText().toString();
+
+        // Já tinhamos limpo, limpamos tudo
+        if (textoAtual.trim().equals(caixaTextoAceite)) {
+            caixaTextoAceite="";
+        }
+
+        visor.setText(caixaTextoAceite);
+
+    }
+
+    public void clicarBtnOk(View vistaBtn) {
+        // Aceita a operação atual (passa para a caixa) de texto e limpa a área de desenho
+
+        TextView visor = findViewById(R.id.textView);
+
+        caixaTextoAceite = visor.getText().toString();
+
+        dv.resetCanvasArea( dv.getWidth(),dv.getHeight());
+    }
+
     private JSONObject getRequestJson() {
 
         JSONObject jsonObject = new JSONObject();
-
-        TextView textView = findViewById(R.id.textView);
-        String preContext = textView.getText().toString();
 
         try {
 
@@ -90,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             JSONObject requestObj = new JSONObject();
             requestObj.put("writing_guide", wrintingGuide);
             //requestObj.put("pre_context", preContext);
-            requestObj.put("pre_context", "0123456789");
+            requestObj.put("pre_context", caixaTextoAceite);
             requestObj.put("max_num_results", 10);
             requestObj.put("max_completions", 0);
             requestObj.put("language", "pt-PT");
@@ -114,6 +142,34 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private String selecionarMelhorOpc(JSONArray arrayActual) {
+
+        // TODO COMPLETAR PARA ESCOLHER A MELHOR OPÇÃO
+
+        String saida = "";
+
+        try {
+            saida = (String) arrayActual.get(0);
+        } catch (JSONException e) {
+            //
+        }
+
+        return saida;
+
+    }
+
+    private void tratarOperCaixaTexto(String textoPendente) {
+
+        TextView visor = findViewById(R.id.textView);
+
+        String textoTotal = caixaTextoAceite+textoPendente;
+
+        // TODO PROCESSAR O TEXTO ANTES DE O MOSTRAR
+
+        visor.setText(textoTotal);
+
+    }
+
     private void requestInputHandwriting() {
 
         String params = "itc=pt-pt-t-i0-handwrit&app=demopage";
@@ -126,14 +182,41 @@ public class MainActivity extends AppCompatActivity {
                 Request.Method.POST, url, getRequestJson(),
                 new Response.Listener<JSONArray>() {
                     public void onResponse(JSONArray response) {
-                        Log.d("resp", response.toString());
+                        try {
+                            if (response.length()>=2) {
+
+                                String estadoResp = (String) response.get(0);
+
+                                if ("SUCCESS".equals(estadoResp)) {
+
+                                    JSONArray arrayRespReq = (JSONArray) response.get(1);
+
+                                    if (arrayRespReq.length()>=1) {
+
+                                        JSONArray arrayResp = (JSONArray) arrayRespReq.get(0);
+
+                                        if (arrayResp.length()>=2) {
+                                                String codigo = (String) arrayResp.get(0);
+                                                JSONArray arrPalavras = (JSONArray) arrayResp.get(1);
+                                                tratarOperCaixaTexto(selecionarMelhorOpc(arrPalavras));
+                                        }
+                                    }
+
+
+                                }
+
+                            }
+
+                        } catch (Exception e) {
+                            Log.d("Error Message","Error: " + e.getMessage());
+                        }
                     }
                 },
                 new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("My App","Error: " + error.getMessage());
+                        Log.d("Error Message","Error: " + error.getMessage());
                     }
                 }) {
             @Override
@@ -147,41 +230,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Add the request to the RequestQueue.
         Volley.newRequestQueue(this).add(jsonObjReq);
-
-    }
-
-
-
-    private void guardarPosLetra(float x, float y) {
-        try {
-            lx.put(x);
-            ly.put(y);
-
-            if (tempoInicio==0) {
-                lt.put(0);
-                tempoInicio = Calendar.getInstance().getTimeInMillis();
-            } else {
-                long tempoAtual = Calendar.getInstance().getTimeInMillis();
-                lt.put(tempoAtual-tempoInicio);
-                tempoInicio=tempoAtual;
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void comecarNovaLetra(float x, float y) {
-        // Criamos as variáveis para enviar no ink
-        lx = new JSONArray();
-        ly = new JSONArray();
-        lt = new JSONArray();
-        JSONArray letraAct = new JSONArray();
-        listaInk.put(letraAct);
-        letraAct.put(lx);
-        letraAct.put(ly);
-        letraAct.put(lt);
-        guardarPosLetra(x,y);
 
     }
 
@@ -212,13 +260,55 @@ public class MainActivity extends AppCompatActivity {
             circlePaint.setStrokeJoin(Paint.Join.MITER);
             circlePaint.setStrokeWidth(4f);
         }
+        private void guardarPosLetra(float x, float y) {
+            try {
+                lx.put(x);
+                ly.put(y);
+
+                if (tempoInicio==0) {
+                    lt.put(0);
+                    tempoInicio = Calendar.getInstance().getTimeInMillis();
+                } else {
+                    long tempoAtual = Calendar.getInstance().getTimeInMillis();
+                    lt.put(tempoAtual-tempoInicio);
+                    tempoInicio=tempoAtual;
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private void comecarNovaLetra(float x, float y) {
+            // Criamos as variáveis para enviar no ink
+            lx = new JSONArray();
+            ly = new JSONArray();
+            lt = new JSONArray();
+            JSONArray letraAct = new JSONArray();
+            listaInk.put(letraAct);
+            letraAct.put(lx);
+            letraAct.put(ly);
+            letraAct.put(lt);
+            guardarPosLetra(x,y);
+
+        }
+
+        public void resetCanvasArea(int w, int h) {
+            listaInk = new JSONArray();
+            lx = new JSONArray();
+            ly = new JSONArray();
+            lt = new JSONArray();
+
+            mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+            mCanvas = new Canvas(mBitmap);
+            invalidate();
+        }
 
         @Override
         protected void onSizeChanged(int w, int h, int oldw, int oldh) {
             super.onSizeChanged(w, h, oldw, oldh);
 
-            mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-            mCanvas = new Canvas(mBitmap);
+            resetCanvasArea(w, h);
         }
 
         @Override
