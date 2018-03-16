@@ -42,8 +42,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,8 +61,225 @@ public class MainActivity extends AppCompatActivity {
 
     private String caixaTextoAceite = "";
 
+    private List<SimboloValorDto> listaSimbolos;
+
+    private void inicializarListaSimbolos() {
+
+        listaSimbolos = new ArrayList<>();
+
+        // Adicionamos o valor 0
+        //---------------------------
+        SimboloValorDto valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("0");
+        List<String> arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("zero");
+        arraySimbolo.add("cero");
+        arraySimbolo.add("zer");
+//        arraySimbolo.add("z");
+        arraySimbolo.add("0");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+        // Adicionamos o valor 1
+        //---------------------------
+        valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("1");
+        arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("um");
+        arraySimbolo.add("uno");
+        arraySimbolo.add("un");
+        arraySimbolo.add("m");
+        arraySimbolo.add("u");
+        arraySimbolo.add("1");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+        // Adicionamos o valor 2
+        //---------------------------
+        valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("2");
+        arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("dois");
+        arraySimbolo.add("doi");
+//        arraySimbolo.add("d");
+        arraySimbolo.add("dos");
+        arraySimbolo.add("2");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+        // Adicionamos o valor 3
+        //---------------------------
+        valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("3");
+        arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("três");
+        arraySimbolo.add("tres");
+        arraySimbolo.add("trez");
+        arraySimbolo.add("tre");
+        arraySimbolo.add("3");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+        // Adicionamos o valor 4
+        //---------------------------
+        valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("4");
+        arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("quatro");
+        arraySimbolo.add("quadro");
+        arraySimbolo.add("quatr");
+//        arraySimbolo.add("q");
+        arraySimbolo.add("4");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+        // Adicionamos o valor 5
+        //---------------------------
+        valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("5");
+        arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("cinco");
+        arraySimbolo.add("cino");
+        arraySimbolo.add("cinc");
+        arraySimbolo.add("cimco");
+        arraySimbolo.add("5");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+        // Adicionamos o valor 6
+        //---------------------------
+        valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("6");
+        arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("seis");
+        arraySimbolo.add("ses");
+        arraySimbolo.add("sei");
+//        arraySimbolo.add("s");
+        arraySimbolo.add("6");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+        // Adicionamos o valor 7
+        //---------------------------
+        valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("7");
+        arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("sete");
+        arraySimbolo.add("set");
+        arraySimbolo.add("se");
+        arraySimbolo.add("ste");
+        arraySimbolo.add("7");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+        // Adicionamos o valor 8
+        //---------------------------
+        valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("8");
+        arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("oito");
+        arraySimbolo.add("oto");
+        arraySimbolo.add("oit");
+//        arraySimbolo.add("o");
+        arraySimbolo.add("8");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+        // Adicionamos o valor 9
+        //---------------------------
+        valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("9");
+        arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("nove");
+        arraySimbolo.add("nov");
+        arraySimbolo.add("move");
+//        arraySimbolo.add("u");
+        arraySimbolo.add("9");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+        // Adicionamos o simbolo +
+        //---------------------------
+        valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("+");
+        arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("mais");
+        arraySimbolo.add("nais");
+        arraySimbolo.add("mai");
+        arraySimbolo.add("nas");
+        arraySimbolo.add("+");
+        arraySimbolo.add("t");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+        // Adicionamos o simbolo -
+        //---------------------------
+        valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("-");
+        arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("menos");
+        arraySimbolo.add("memos");
+        arraySimbolo.add("nemos");
+        arraySimbolo.add("nenos");
+        arraySimbolo.add("-");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+        // Adicionamos o simbolo *
+        //---------------------------
+        valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("*");
+        arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("vezes");
+        arraySimbolo.add("veses");
+        arraySimbolo.add("x");
+        arraySimbolo.add("*");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+        // Adicionamos o simbolo /
+        //---------------------------
+        valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("/");
+        arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("dividir");
+        arraySimbolo.add("divisão");
+        arraySimbolo.add("/");
+        arraySimbolo.add("|");
+        arraySimbolo.add("div");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+        // Adicionamos o simbolo =
+        //---------------------------
+        valSimbolo = new SimboloValorDto();
+        valSimbolo.setSimbolo("=");
+        arraySimbolo = new ArrayList<>();
+        arraySimbolo.add("igual");
+        arraySimbolo.add("=");
+        valSimbolo.setValoresPossiveis(arraySimbolo);
+        listaSimbolos.add(valSimbolo);
+        //---------------------------
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        inicializarListaSimbolos();
         super.onCreate(savedInstanceState);
         listaInk = new JSONArray();
         dv = new DrawingView(this);
@@ -75,6 +294,71 @@ public class MainActivity extends AppCompatActivity {
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(12);
+    }
+
+
+    private String calcularExprMatematica(String textoEntrada) {
+
+        String saida = "";
+
+
+        // A caixa tem texto e tem o igual para obter o resultado
+        if (textoEntrada!=null
+                && textoEntrada.trim()!=""
+                && textoEntrada.indexOf("=")==textoEntrada.length()-1) {
+
+            try {
+
+                double resultado = evalNumericExp(textoEntrada.replace("=",""));
+                saida = String.valueOf(resultado);
+
+            } catch(Exception e) {
+            }
+
+        }
+
+        return saida;
+
+    }
+
+    private void processarInfoCaixa() {
+
+        TextView visor = findViewById(R.id.textView);
+
+        String[] arrComps = visor.getText().toString().split(" ");
+        String textoConvertido = "";
+
+        if (arrComps!=null && arrComps.length>0) {
+            for (String componente : arrComps) {
+
+                String simboloAct = null;
+                for (SimboloValorDto simbolo : listaSimbolos) {
+
+                    for (String simEquivalente : simbolo.getValoresPossiveis()){
+
+                        // Neste caso temos equivalencia, guardamos o valor
+                        if (componente.toLowerCase().equals(simEquivalente)) {
+                            simboloAct=simbolo.getSimbolo();
+                            break;
+                        }
+
+                    }
+
+                    if (simboloAct!=null) {
+                        textoConvertido+=simboloAct;
+                        break;
+                    }
+
+                }
+
+            }
+
+            TextView vistaConvertido = findViewById(R.id.rxtTransf);
+            vistaConvertido.setText(textoConvertido+calcularExprMatematica(textoConvertido));
+
+        }
+
+
     }
 
     public void clicarBtnLimpar(View vistaBtn) {
@@ -92,6 +376,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         visor.setText(caixaTextoAceite);
+        processarInfoCaixa();
 
     }
 
@@ -103,6 +388,8 @@ public class MainActivity extends AppCompatActivity {
         caixaTextoAceite = visor.getText().toString();
 
         dv.resetCanvasArea( dv.getWidth(),dv.getHeight());
+
+        processarInfoCaixa();
     }
 
     private JSONObject getRequestJson() {
@@ -144,11 +431,11 @@ public class MainActivity extends AppCompatActivity {
 
     private String selecionarMelhorOpc(JSONArray arrayActual) {
 
-        // TODO COMPLETAR PARA ESCOLHER A MELHOR OPÇÃO
-
         String saida = "";
 
         try {
+            // Selecionamos sempre a primeira opção,
+            // No futuro podemos tentar selecionar a opção que contenha mais coincidencias
             saida = (String) arrayActual.get(0);
         } catch (JSONException e) {
             //
@@ -164,9 +451,9 @@ public class MainActivity extends AppCompatActivity {
 
         String textoTotal = caixaTextoAceite+textoPendente;
 
-        // TODO PROCESSAR O TEXTO ANTES DE O MOSTRAR
-
         visor.setText(textoTotal);
+
+        processarInfoCaixa();
 
     }
 
@@ -376,6 +663,86 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         }
+    }
+
+    public static double evalNumericExp(final String str) {
+        return new Object() {
+            int pos = -1, ch;
+
+            void nextChar() {
+                ch = (++pos < str.length()) ? str.charAt(pos) : -1;
+            }
+
+            boolean eat(int charToEat) {
+                while (ch == ' ') nextChar();
+                if (ch == charToEat) {
+                    nextChar();
+                    return true;
+                }
+                return false;
+            }
+
+            double parse() {
+                nextChar();
+                double x = parseExpression();
+                if (pos < str.length()) throw new RuntimeException("Unexpected: " + (char)ch);
+                return x;
+            }
+
+            // Grammar:
+            // expression = term | expression `+` term | expression `-` term
+            // term = factor | term `*` factor | term `/` factor
+            // factor = `+` factor | `-` factor | `(` expression `)`
+            //        | number | functionName factor | factor `^` factor
+
+            double parseExpression() {
+                double x = parseTerm();
+                for (;;) {
+                    if      (eat('+')) x += parseTerm(); // addition
+                    else if (eat('-')) x -= parseTerm(); // subtraction
+                    else return x;
+                }
+            }
+
+            double parseTerm() {
+                double x = parseFactor();
+                for (;;) {
+                    if      (eat('*')) x *= parseFactor(); // multiplication
+                    else if (eat('/')) x /= parseFactor(); // division
+                    else return x;
+                }
+            }
+
+            double parseFactor() {
+                if (eat('+')) return parseFactor(); // unary plus
+                if (eat('-')) return -parseFactor(); // unary minus
+
+                double x;
+                int startPos = this.pos;
+                if (eat('(')) { // parentheses
+                    x = parseExpression();
+                    eat(')');
+                } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
+                    while ((ch >= '0' && ch <= '9') || ch == '.') nextChar();
+                    x = Double.parseDouble(str.substring(startPos, this.pos));
+                } else if (ch >= 'a' && ch <= 'z') { // functions
+                    while (ch >= 'a' && ch <= 'z') nextChar();
+                    String func = str.substring(startPos, this.pos);
+                    x = parseFactor();
+                    if (func.equals("sqrt")) x = Math.sqrt(x);
+                    else if (func.equals("sin")) x = Math.sin(Math.toRadians(x));
+                    else if (func.equals("cos")) x = Math.cos(Math.toRadians(x));
+                    else if (func.equals("tan")) x = Math.tan(Math.toRadians(x));
+                    else throw new RuntimeException("Unknown function: " + func);
+                } else {
+                    throw new RuntimeException("Unexpected: " + (char)ch);
+                }
+
+                if (eat('^')) x = Math.pow(x, parseFactor()); // exponentiation
+
+                return x;
+            }
+        }.parse();
     }
 
 }
